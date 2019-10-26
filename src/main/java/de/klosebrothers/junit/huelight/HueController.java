@@ -14,6 +14,7 @@ public class HueController {
 
     public static final String RED = "1";
     public static final String GREEN = "23000";
+
     private static final String DEFAULT_HUE_CLIENT = System.getProperty("hue.client");
     private static final String DEFAULT_IP = System.getProperty("hue.ip");
     private static final int TIMEOUT = Integer.getInteger("hue.timeout", 5000);
@@ -157,6 +158,9 @@ public class HueController {
             String urlString = String.format("http://%s/api/%s/lights/%s/state", hueConnectorIp, hueClient, lamp);
             URL url = new URL(urlString);
             String response = sendHttpRequest(url, "PUT", changeColourBody);
+            if (response.contains("error")) {
+                logger.warning(response);
+            }
         } catch (SocketTimeoutException ioe) {
             disable("connection timeout");
         } catch (IOException ioe) {

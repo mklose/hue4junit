@@ -18,8 +18,10 @@ class ExampleTest {
     }
 
     @Test
+    @Disabled("TODO")
     void expecting_yellow_lights() throws Exception {
         Thread.sleep(3000);
+
     }
 
 }
