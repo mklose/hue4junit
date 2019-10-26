@@ -1,0 +1,38 @@
+<html>
+<head>
+    <script>
+        function displayResult(result){
+            var result_display = document.getElementById('result');
+            console.log(result);
+            result_display.appendChild(document.createTextNode(result));
+            result_display.appendChild(document.createElement('br'));
+        }
+
+        var reqLookup = new XMLHttpRequest();
+        reqLookup.open('GET', 'https://www.meethue.com/api/nupnp');
+        reqLookup.addEventListener('load', function () {
+            var result = JSON.parse(reqLookup.responseText);
+            var hue = result[0];
+            var hueAddr = hue.internalipaddress;
+            displayResult('Found Hue @ ' + hueAddr);
+
+            var reqApi = new XMLHttpRequest();
+            reqApi.open('POST', 'http://' + hueAddr + '/api');
+            reqApi.addEventListener('load', function () {
+                displayResult('Hue Response: ' + reqApi.responseText);
+            });
+            var reqApiParams = '{"devicetype":"hue_client"}';
+            reqApi.send(reqApiParams);
+
+        });
+        reqLookup.send();
+
+
+    </script>
+</head>
+<body>
+    <h2>need to press button on hue bridge</h2>
+    <div id='result'></div>
+    <button type="submit"  onClick="window.location.reload();">reload</button>
+</body>
+</html>
