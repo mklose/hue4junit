@@ -30,13 +30,13 @@ compileTestJava {
 test {
     useJUnitPlatform()
     systemProperties = [
-        // "hue.client": "3O2Ce9zBt9ed7Ht9kdvAlYVbLr7ycmVtTOc6FICU",
-        "hue.client": "Y0YtVSXtBGLv1K5-jTIj07u51fiedXKRGjzeiv-W",
+            //"hue.client"        : "3O2Ce9zBt9ed7Ht9kdvAlYVbLr7ycmVtTOc6FICU",
+            "hue.client"        : "Y0YtVSXtBGLv1K5-jTIj07u51fiedXKRGjzeiv-W",
 
-        //optional:
-        "hue.ip": "192.168.178.49",
-        "hue.timeout": 2500,
-        "hue.listener.lamps": ["1", "3"]
+            //optional:
+            "hue.ip"            : "192.168.178.49",
+            "hue.timeout"       : 2500,
+            "hue.listener.lamps": ["1", "3"]
     ]
 
 }
