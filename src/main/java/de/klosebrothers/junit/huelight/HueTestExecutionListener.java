@@ -84,20 +84,20 @@ public class HueTestExecutionListener implements TestExecutionListener {
         }
     }
 
-    private void green() {
+    private void changeColourTo(String colour) {
         if (hueController != null) {
             for (String lamp : LAMPS) {
-                hueController.changeColourTo(lamp, GREEN);
+                hueController.changeColourTo(lamp, colour);
             }
         }
     }
 
+    private void green() {
+        changeColourTo(GREEN);
+    }
+
     private void red() {
-        if (hueController != null) {
-            for (String lamp : LAMPS) {
-                hueController.changeColourTo(lamp, RED);
-            }
-        }
+        changeColourTo(RED);
     }
 
     private void blink() {
