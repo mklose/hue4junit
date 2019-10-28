@@ -1,4 +1,4 @@
-package de.klosebrothers.junit.huelight;
+package de.klosebrothers.hue.hue4junit;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

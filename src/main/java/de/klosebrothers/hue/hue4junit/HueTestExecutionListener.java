@@ -1,4 +1,4 @@
-package de.klosebrothers.junit.huelight;
+package de.klosebrothers.hue.hue4junit;
 
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.launcher.TestExecutionListener;
@@ -8,9 +8,6 @@ import org.junit.platform.launcher.TestPlan;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static de.klosebrothers.junit.huelight.HueController.GREEN;
-import static de.klosebrothers.junit.huelight.HueController.RED;
 
 
 public class HueTestExecutionListener implements TestExecutionListener {
@@ -93,11 +90,11 @@ public class HueTestExecutionListener implements TestExecutionListener {
     }
 
     private void green() {
-        changeColourTo(GREEN);
+        changeColourTo(HueController.GREEN);
     }
 
     private void red() {
-        changeColourTo(RED);
+        changeColourTo(HueController.RED);
     }
 
     private void blink() {

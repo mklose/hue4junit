@@ -1,4 +1,4 @@
-package de.klosebrothers.junit.huelight;
+package de.klosebrothers.hue.hue4junit;
 
 import java.io.BufferedReader;
 import java.io.IOException;
