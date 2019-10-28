@@ -8,7 +8,10 @@ repositories {
     mavenCentral()
 }
 
+version = '0.1.0'
+
 apply plugin: 'java'
+apply plugin: 'maven-publish'
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
@@ -43,7 +46,40 @@ test {
 
 }
 
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            pom {
+                name = 'hue4junit'
+                groupId = 'de.klosebrothers.hue'
+
+                description = 'Junit5 TestExecutionListener for Philips hue lights'
+                url = 'https://github.com/mklose/hue4junit'
+
+
+                licenses {
+                    license {
+                        name = 'Eclipse Public License - v 2.0'
+        						    url = 'http://www.eclipse.org/legal/epl-v20.html'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'mklose'
+                        name = 'Martin Klose'
+                        email = 'mklose.klosebrothers.de'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git@github.com:mklose/hue4junit.git'
+                    developerConnection = 'scm:git:git@github.com:mklose/hue4junit.git'
+                    url = 'https://github.com/mklose/hue4junit'
+                }
+            }
+        }
+    }
+}
+
 wrapper {
     gradleVersion = '5.6.2'
 }
-
