@@ -11,8 +11,17 @@
 
         var reqLookup = new XMLHttpRequest();
         reqLookup.open('GET', 'https://www.meethue.com/api/nupnp');
+        reqLookup.addEventListener("error", function () {
+            displayResult('something went wrong :/');
+        });
         reqLookup.addEventListener('load', function () {
             var result = JSON.parse(reqLookup.responseText);
+            if (result.length === 0){
+                displayResult('Did not find a hue :/');
+                displayResult('Is the hue birdge turned on and in your network?');
+                displayResult('Can you see the bridge on https://www.meethue.com/api/nupnp?');
+                return;
+            }
             var hue = result[0];
             var hueAddr = hue.internalipaddress;
             displayResult('Found Hue @ ' + hueAddr);
