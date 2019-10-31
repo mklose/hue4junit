@@ -47,13 +47,35 @@ test {
 }
 
 publishing {
+    repositories {
+        maven {
+            def ossrhUsername = project.hasProperty('ossrhUsername') ? project.ossrhUsername : ''
+            def ossrhPassword = project.hasProperty('ossrhPassword') ? project.ossrhPassword : ''
+
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
+            }
+
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+        }
+    }
+
     publications {
         mavenJava(MavenPublication) {
+            groupId = 'de.klosebrothers.hue'
+            artifactId = 'hue4junit'
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
             pom {
                 name = 'hue4junit'
                 groupId = 'de.klosebrothers.hue'
 
-                description = 'Junit5 TestExecutionListener for Philips hue lights'
+                description = 'JUnit5 TestExecutionListener for Philips hue lights'
                 url = 'https://github.com/mklose/hue4junit'
 
 
@@ -79,6 +101,11 @@ publishing {
         }
     }
 }
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
 
 wrapper {
     gradleVersion = '5.6.2'
