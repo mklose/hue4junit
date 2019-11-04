@@ -13,7 +13,7 @@ version = '0.1.0-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'java-library'
 apply plugin: 'maven-publish'
-//apply plugin: 'signing'
+apply plugin: 'signing'
 
 task javadocJar(type: Jar) {
   classifier = 'javadoc'
@@ -73,7 +73,7 @@ publishing {
 
             def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
             def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
-            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            url = isSnapshotRelease() ? snapshotsRepoUrl : releasesRepoUrl
         }
     }
 
@@ -115,11 +115,16 @@ publishing {
         }
     }
 }
-/*
-signing {
-    sign publishing.publications.mavenJava
+
+boolean isSnapshotRelease() {
+    version.endsWith('SNAPSHOT')
 }
-*/
+
+signing {
+    if (!isSnapshotRelease()) {
+        sign publishing.publications.mavenJava
+    }
+}
 
 wrapper {
     gradleVersion = '5.6.2'
