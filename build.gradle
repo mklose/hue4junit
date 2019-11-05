@@ -54,7 +54,6 @@ test {
             //optional:
             //"hue.ip": "192.168.178.49",
             "hue.timeout"       : 2500,
-            // TODO fix me "hue.listener.lamps": ["1", "2", "3", "4", "5"]
             "hue.listener.lamps": ["1", "2", "3"]
     ]
 
