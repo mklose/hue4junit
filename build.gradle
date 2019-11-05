@@ -103,7 +103,7 @@ publishing {
                     developer {
                         id = 'mklose'
                         name = 'Martin Klose'
-                        email = 'mklose.klosebrothers.de'
+                        email = 'mklose@klosebrothers.de'
                     }
                 }
                 scm {
