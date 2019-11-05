@@ -1,5 +1,5 @@
 
-This library provides a junit5 TestExecutionListener for [Philips hue lights ](https://www2.meethue.com/en-us) to indicate junit test run results by turning light bulbs green or red.
+This library provides a JUnit5 TestExecutionListener for [Philips hue lights ](https://www2.meethue.com/en-us) to indicate JUnit test run results by turning light bulbs green or red.
 
 # how to
 ## setup hue
