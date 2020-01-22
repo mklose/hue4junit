@@ -5,30 +5,10 @@ import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
 import org.junit.platform.launcher.TestPlan;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-
 public class HueTestExecutionListener implements TestExecutionListener {
 
-    private static final List<String> LAMPS = getLamps();
     private volatile boolean executionFailed;
     private HueController hueController;
-
-    private static List<String> getLamps() {
-        String lampsList = System.getProperty("hue.listener.lamps");
-        if (lampsList == null) {
-            return Arrays.asList("1", "2", "3");
-        }
-        return Arrays.stream(
-                lampsList
-                        .replace("[", "")
-                        .replace("]", "")
-                        .split(","))
-                .map(String::trim)
-                .collect(Collectors.toList());
-    }
 
     @Override
     public void testPlanExecutionStarted(TestPlan testPlan) {
@@ -67,7 +47,7 @@ public class HueTestExecutionListener implements TestExecutionListener {
 
     private void off() {
         if (hueController != null) {
-            for (String lamp : LAMPS) {
+            for (String lamp : hueController.getLampIds()) {
                 hueController.switchOff(lamp);
             }
         }
@@ -75,7 +55,7 @@ public class HueTestExecutionListener implements TestExecutionListener {
 
     private void on() {
         if (hueController != null) {
-            for (String lamp : LAMPS) {
+            for (String lamp : hueController.getLampIds()) {
                 hueController.switchOn(lamp);
             }
         }
@@ -83,7 +63,7 @@ public class HueTestExecutionListener implements TestExecutionListener {
 
     private void changeColourTo(String colour) {
         if (hueController != null) {
-            for (String lamp : LAMPS) {
+            for (String lamp : hueController.getLampIds()) {
                 hueController.changeColourTo(lamp, colour);
             }
         }

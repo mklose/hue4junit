@@ -1,50 +1,113 @@
 package de.klosebrothers.hue.hue4junit;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
+import java.io.*;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.Properties;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
+import static java.lang.Integer.getInteger;
 
 public class HueController {
 
     public static final String RED = "1";
     public static final String GREEN = "23000";
-
-    private static final String DEFAULT_HUE_CLIENT = System.getProperty("hue.client");
-    private static final String DEFAULT_IP = System.getProperty("hue.ip");
-    private static final int TIMEOUT = Integer.getInteger("hue.timeout", 5000);
+    //TODO client->token
+    static final String PROP_NAME_HUE_CLIENT = "hue.client";
+    static final String PROP_NAME_HUE_IP = "hue.ip";
+    static final String PROP_NAME_HUE_LAMPS = "hue.listener.lamps";
+    static final String PROP_NAME_HUE_TIMEOUT = "hue.timeout";
+    static final String PROP_FILENAME = "hue4java.properties";
+    private static final String DEFAULT_IP = getHueProperty(PROP_NAME_HUE_IP);
+    private static final List<String> LAMPS = getLamps();
     static Logger logger = Logger.getLogger(HueController.class.getName());
-    private final String hueClient;
-    private final String hueConnectorIp;
+    private String hueClient;
+    private HttpAdapter httpadapter;
+    private String hueConnectorIp;
     private boolean disabled = false;
+
     public HueController() {
-        this(DEFAULT_HUE_CLIENT, determineConnectorIp());
+        this(new HttpAdapter(getInteger(getHueProperty(PROP_NAME_HUE_TIMEOUT), 5000)));
     }
 
-    public HueController(String client, String connectorIp) {
+    public HueController(HttpAdapter httpadapter) {
+        this(
+                httpadapter,
+                getHueProperty(PROP_NAME_HUE_CLIENT)
+        );
+    }
+
+    public HueController(HttpAdapter httpadapter, String hueClient) {
+        this(
+                hueClient,
+                httpadapter,
+                determineConnectorIp(httpadapter)
+        );
+    }
+
+    public HueController(String client, HttpAdapter httpadapter, String connectorIp) {
         validateClient(client);
         validateConnectorIp(connectorIp);
         logConnectionParameters(client, connectorIp);
         hueClient = client;
         hueConnectorIp = connectorIp;
+        this.httpadapter = httpadapter;
     }
 
-    public static String determineConnectorIp() {
-        if (DEFAULT_IP != null) {
-            return DEFAULT_IP;
-        }
+
+    static String getHueProperty(String string) {
+        //TODO extract in property provider
+        return getHueProperty(string, PROP_FILENAME);
+    }
+
+    static String getHueProperty(String filename, String propertyName) {
+        //TODO docu
+        // that it's looking for hue4java.properties
+        return getProperty(HueController.class.getClassLoader().getResourceAsStream(filename), propertyName)
+                .orElse(getProperty(Paths.get(filename).toFile(), propertyName)
+                        .orElse(System.getProperty(propertyName)));
+    }
+
+    static Optional<String> getProperty(File file, String propertyName) {
+        FileInputStream inputStream;
         try {
-            URL url = new URL("https://www.meethue.com/api/nupnp");
-            String response = sendHttpRequest(url, "GET", null);
-            return extractIp(response);
-        } catch (IOException e) {
-            throw new RuntimeException("Cannot determine IP for hue connector", e);
+            inputStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            return Optional.empty();
         }
+        return getProperty(inputStream, propertyName);
+    }
+
+    static Optional<String> getProperty(InputStream inputStream, String propertyName) {
+        if (inputStream == null) return Optional.empty();
+        Properties props = new Properties();
+        try {
+            props.load(inputStream);
+            String property = props.getProperty(propertyName);
+            if (property != null)
+                return Optional.of(property);
+        } catch (IOException ignored) {
+        }
+        return Optional.empty();
+    }
+
+    private static List<String> getLamps() {
+        String lampsList = getHueProperty(PROP_NAME_HUE_LAMPS);
+        if (lampsList == null) {
+            return Arrays.asList("1", "2", "3");
+        }
+        return Arrays.stream(
+                lampsList
+                        .replace("[", "")
+                        .replace("]", "")
+                        .split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -61,24 +124,6 @@ public class HueController {
         controller.switchOff("3");
     }
 
-    private static String sendHttpRequest(URL url, String method, String body) throws IOException {
-        HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-        httpCon.setConnectTimeout(TIMEOUT);
-        httpCon.setRequestMethod(method);
-        if (body != null) {
-            httpCon.setDoOutput(true);
-            OutputStreamWriter out = new OutputStreamWriter(httpCon.getOutputStream());
-            out.write(body);
-            out.close();
-        }
-        return getResponse(httpCon);
-    }
-
-    private static String getResponse(HttpURLConnection httpCon) throws IOException {
-        BufferedReader responseReader = new BufferedReader(new InputStreamReader(httpCon.getInputStream()));
-        return responseReader.lines().collect(Collectors.joining(System.getProperty("line.separator")));
-    }
-
     private static String extractIp(String response) {
         if (response == null) {
             return null;
@@ -91,10 +136,28 @@ public class HueController {
                     .replace("}", "");
             ip = ip.split(",")[1].split(":")[1];
             ip = ip.replace("\"", "");
-            return ip;
+            return ip.trim();
         } catch (Exception any) {
             return null;
         }
+    }
+
+    public static String determineConnectorIp(HttpAdapter httpadapter) {
+        if (DEFAULT_IP != null) {
+            return DEFAULT_IP;
+        }
+
+        try {
+            URL url = new URL("https://www.meethue.com/api/nupnp");
+            String response = httpadapter.sendGetRequest(url);
+            return extractIp(response);
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot determine IP for hue connector", e);
+        }
+    }
+
+    public boolean isDisabled() {
+        return disabled;
     }
 
     private void logConnectionParameters(String client, String connectorIp) {
@@ -109,22 +172,24 @@ public class HueController {
     }
 
     private void validateConnectorIp(String connectorIp) {
-        if (connectorIp == null) {
-            String message = String.format(
-                    "HueController requires an IP address.%n" +
-                            "   Consider to use system property 'hue.ip'%n");
-            logger.warning(message);
-            disable("missing Hue IP address");
-        }
+        disableIfNot(connectorIp);
+    }
+
+    private void disableIfNot(String connectorIp) {
+        disableWhenNull(connectorIp, "Hue IP address", "hue.ip");
     }
 
     private void validateClient(String client) {
+        disableWhenNull(client, "Hue client", "hue.client");
+    }
+
+    private void disableWhenNull(String client, final String name, final String propertyName) {
         if (client == null) {
             String message = String.format(
-                    "HueController requires a Hue client.%n   " +
-                            "Consider to use system property 'hue.client'%n");
+                    "HueController requires a " + name + ".%n" +
+                            "   Consider to use system property '" + propertyName + "'%n");
             logger.warning(message);
-            disable("missing Hue client");
+            disable("missing " + name);
         }
     }
 
@@ -157,7 +222,7 @@ public class HueController {
         try {
             String urlString = String.format("http://%s/api/%s/lights/%s/state", hueConnectorIp, hueClient, lamp);
             URL url = new URL(urlString);
-            String response = sendHttpRequest(url, "PUT", changeColourBody);
+            String response = httpadapter.sendPutRequest(url, changeColourBody);
             if (response.contains("error")) {
                 logger.warning(response);
             }
@@ -173,4 +238,7 @@ public class HueController {
         logger.warning(String.format("HueController disabled due to %s%n", reason));
     }
 
+    public List<String> getLampIds() {
+        return LAMPS;
+    }
 }
