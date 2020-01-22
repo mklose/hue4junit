@@ -2,7 +2,6 @@ ext {
     junitPlatformVersion = '1.5.2'
     junitJupiterVersion = '5.5.2'
     assertJVersion = '3.13.2'
-
 }
 repositories {
     mavenCentral()
@@ -16,13 +15,13 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 task javadocJar(type: Jar) {
-  classifier = 'javadoc'
-  from javadoc
+    classifier = 'javadoc'
+    from javadoc
 }
 
 task sourcesJar(type: Jar) {
-  classifier = 'sources'
-  from sourceSets.main.allSource
+    classifier = 'sources'
+    from sourceSets.main.allSource
 }
 
 tasks['publish'].dependsOn(build)
@@ -49,7 +48,7 @@ test {
     systemProperties = [
             //"hue.client"        : "3O2Ce9zBt9ed7Ht9kdvAlYVbLr7ycmVtTOc6FICU",
             //"hue.client"        : "Y0YtVSXtBGLv1K5-jTIj07u51fiedXKRGjzeiv-W",
-            "hue.client"        : "8GFTbkftIvDT0SWSyV4LliHJICB870JVRr5TkTk1",
+            "hue.client": "8GFTbkftIvDT0SWSyV4LliHJICB870JVRr5TkTk1"
 
             //optional:
             //"hue.ip": "192.168.178.49",
@@ -95,7 +94,7 @@ publishing {
                 licenses {
                     license {
                         name = 'Eclipse Public License - v 2.0'
-        						    url = 'http://www.eclipse.org/legal/epl-v20.html'
+                        url = 'http://www.eclipse.org/legal/epl-v20.html'
                     }
                 }
                 developers {
