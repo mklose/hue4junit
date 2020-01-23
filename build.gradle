@@ -65,6 +65,7 @@ test {
 publishing {
     repositories {
         maven {
+            //HINT password is here ~/.gradle/gradle.properties
             def ossrhUsername = project.hasProperty('ossrhUsername') ? project.ossrhUsername : ''
             def ossrhPassword = project.hasProperty('ossrhPassword') ? project.ossrhPassword : ''
 
