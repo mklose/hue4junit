@@ -41,4 +41,10 @@ class HueControllerTest {
                         eq("{\"on\":true}"));
 
     }
+
+    //TODO test for :
+    //de.klosebrothers.hue.hue4junit.HueController sendToHue
+    //WARNING: [{"error":{"type":1,"address":"/lights","description":"unauthorized user"}}]
+
+    //TODO test for getLamps from : [1, 2, 4]
 }
