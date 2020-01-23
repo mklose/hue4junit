@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import static java.lang.Integer.getInteger;
+import static java.lang.Integer.parseInt;
 
 public class HueController {
 
@@ -40,8 +40,9 @@ public class HueController {
             disable("missing mandatory properties");
         }
 
+
         propertyProvider.getHueTimeout()
-                .ifPresent(t -> httpadapter.setTimeout(getInteger(t)));
+                .ifPresent(t -> httpadapter.setTimeout(parseInt(t)));
 
         hueClient = propertyProvider.getHueClient().orElse("");
         hueConnectorIp = propertyProvider.getHueBridgeIp().orElse("");
