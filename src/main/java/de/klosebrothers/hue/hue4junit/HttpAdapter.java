@@ -9,10 +9,9 @@ import java.net.URL;
 import java.util.stream.Collectors;
 
 public class HttpAdapter {
-    private int timeout;
+    private int timeout = 5000;
 
-    HttpAdapter(int timeout) {
-        this.timeout = timeout;
+    HttpAdapter() {
     }
 
     String sendGetRequest(URL url) throws IOException {
@@ -41,4 +40,7 @@ public class HttpAdapter {
         return responseReader.lines().collect(Collectors.joining(System.getProperty("line.separator")));
     }
 
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
+    }
 }
