@@ -40,7 +40,8 @@ public class HueController {
             disable("missing mandatory properties");
         }
 
-        propertyProvider.getHueTimeout().ifPresent((t) -> httpadapter.setTimeout(getInteger(t)));
+        propertyProvider.getHueTimeout()
+                .ifPresent(t -> httpadapter.setTimeout(getInteger(t)));
 
         hueClient = propertyProvider.getHueClient().orElse("");
         hueConnectorIp = propertyProvider.getHueBridgeIp().orElse("");
