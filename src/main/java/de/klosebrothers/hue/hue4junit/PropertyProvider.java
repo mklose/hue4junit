@@ -8,8 +8,7 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 public class PropertyProvider {
-    //TODO client->username
-    private static final String PROP_NAME_HUE_CLIENT = "hue.client";
+    private static final String PROP_NAME_HUE_USERNAME = "hue.username";
     private static final String PROP_NAME_HUE_IP = "hue.ip";
     private static final String PROP_NAME_HUE_LAMPS = "hue.listener.lamps";
     private static final String PROP_NAME_HUE_TIMEOUT = "hue.timeout";
@@ -107,10 +106,10 @@ public class PropertyProvider {
         return getHueProperty(PROP_NAME_HUE_LAMPS);
     }
 
-    public Optional<String> getHueClient() {
-        Optional<String> property = getHueProperty(PROP_NAME_HUE_CLIENT);
+    public Optional<String> getHueUsername() {
+        Optional<String> property = getHueProperty(PROP_NAME_HUE_USERNAME);
         if (!property.isPresent()) {
-            missingMandatoryProperty("Hue client", PROP_NAME_HUE_CLIENT);
+            missingMandatoryProperty("Hue username", PROP_NAME_HUE_USERNAME);
         }
         return property;
     }
@@ -131,6 +130,6 @@ public class PropertyProvider {
     }
 
     public boolean hasMandatoryProperties() {
-        return getHueClient().isPresent() && getHueBridgeIp().isPresent();
+        return getHueUsername().isPresent() && getHueBridgeIp().isPresent();
     }
 }

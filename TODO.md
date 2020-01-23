@@ -1,5 +1,5 @@
 
 [ ] setup sonar
-[ ] hue.client -> username
+[x] hue.username -> username
 [ ] update swkberlin project
  

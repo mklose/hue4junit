@@ -5,15 +5,15 @@ This library provides a JUnit5 TestExecutionListener for [Philips hue lights ](h
 
 # how to
 ## setup hue
-open [setup_hue.html](http://htmlpreview.github.io/?https://github.com/mklose/hue4junit/blob/master/setup_hue.html) and use returned value of __username__ as `hue.client`.
+open [setup_hue.html](http://htmlpreview.github.io/?https://github.com/mklose/hue4junit/blob/master/setup_hue.html) and use returned value of __username__ as `hue.username`.
 
-`hue.client` will be retrieved in this order from :
+`hue.username` will be retrieved in this order from :
  1. resource file [hue4junit.properties](src/test/resources/hue4junit.properties)
  1. [hue4junit.properties](hue4junit.properties) in project folder
- 1. System Property `hue.client`
+ 1. System Property `hue.username`
  
  ### optional settings are:
- these settings will be retrieved the same way as `hue.client`. 
+ these settings will be retrieved the same way as `hue.username`. 
   - `hue.ip` , unless set we try to get this value via [meethue](https://www.meethue.com/api/nupnp)
   - `hue.timeout` , timeout for calls to hue bridge, default `5000`
   - `hue.listener.lamps` , ids of lamps to be used, default is  `[1, 2, 3]`

@@ -52,7 +52,7 @@ compileTestJava {
 test {
     useJUnitPlatform()
     systemProperties = [
-            "hue.client": "8GFTbkftIvDT0SWSyV4LliHJICB870JVRr5TkTk1"
+            "hue.username": "8GFTbkftIvDT0SWSyV4LliHJICB870JVRr5TkTk1"
 
             //optional:
             //"hue.ip": 192.168.178.49,

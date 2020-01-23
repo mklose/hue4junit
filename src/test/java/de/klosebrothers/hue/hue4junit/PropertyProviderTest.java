@@ -34,7 +34,7 @@ class PropertyProviderTest {
     void it_should_read_parameters_from_resource_file() {
         assertThat(propertyProvider.getHueBridgeIp())
                 .hasValue("192.168.178.49");
-        assertThat(propertyProvider.getHueClient())
+        assertThat(propertyProvider.getHueUsername())
                 .hasValue("8GFTbkftIvDT0SWSyV4LliHJICB870JVRr5TkTk1");
         assertThat(propertyProvider.getHueLamps())
                 .hasValue("[1, 2, 3]");
@@ -44,7 +44,7 @@ class PropertyProviderTest {
 
     @Test
     @SetSystemProperty(key = "hue.ip", value = "a")
-    @SetSystemProperty(key = "hue.client", value = "b")
+    @SetSystemProperty(key = "hue.username", value = "b")
     @SetSystemProperty(key = "hue.listener.lamps", value = "c")
     @SetSystemProperty(key = "hue.timeout", value = "d")
     void it_should_read_parameters_from_system_properties_when_propertyfile_is_missing() {
@@ -52,7 +52,7 @@ class PropertyProviderTest {
 
         assertThat(propertyProvider.getHueBridgeIp())
                 .hasValue("a");
-        assertThat(propertyProvider.getHueClient())
+        assertThat(propertyProvider.getHueUsername())
                 .hasValue("b");
         assertThat(propertyProvider.getHueLamps())
                 .hasValue("c");
@@ -62,7 +62,7 @@ class PropertyProviderTest {
 
     @Test
     @ClearSystemProperty(key = "hue.ip")
-    @ClearSystemProperty(key = "hue.client")
+    @ClearSystemProperty(key = "hue.username")
     @ClearSystemProperty(key = "hue.listener.lamps")
     @ClearSystemProperty(key = "hue.timeout")
     void it_should_return_null_when_propfile_is_missing_and_system_properties_are_not_set() {
@@ -70,7 +70,7 @@ class PropertyProviderTest {
 
         assertThat(propertyProvider.getHueBridgeIp())
                 .isEmpty();
-        assertThat(propertyProvider.getHueClient())
+        assertThat(propertyProvider.getHueUsername())
                 .isEmpty();
         assertThat(propertyProvider.getHueLamps())
                 .isEmpty();
@@ -80,7 +80,7 @@ class PropertyProviderTest {
 
     @Test
     @ClearSystemProperty(key = "hue.ip")
-    @ClearSystemProperty(key = "hue.client")
+    @ClearSystemProperty(key = "hue.username")
     void does_not_have_mandatory_properties() {
         propertyProvider.setPropertyFilename("MISSING_PROP_FILE");
 

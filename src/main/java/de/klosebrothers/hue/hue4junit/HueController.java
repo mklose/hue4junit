@@ -44,7 +44,7 @@ public class HueController {
         propertyProvider.getHueTimeout()
                 .ifPresent(t -> httpadapter.setTimeout(parseInt(t)));
 
-        hueClient = propertyProvider.getHueClient().orElse("");
+        hueClient = propertyProvider.getHueUsername().orElse("");
         hueConnectorIp = propertyProvider.getHueBridgeIp().orElse("");
 
         logConnectionParameters();

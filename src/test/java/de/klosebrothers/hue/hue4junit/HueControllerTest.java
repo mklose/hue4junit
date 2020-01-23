@@ -24,7 +24,7 @@ class HueControllerTest {
     @Test
     void it_should_call_hue_on_lamps_on() throws IOException {
         when(propertyProvider.getHueBridgeIp()).thenReturn(Optional.of("192.168.2.2"));
-        when(propertyProvider.getHueClient()).thenReturn(Optional.of("someToken"));
+        when(propertyProvider.getHueUsername()).thenReturn(Optional.of("someUsername"));
         when(propertyProvider.hasMandatoryProperties()).thenReturn(true);
 
         when(httpAdapter
@@ -37,7 +37,7 @@ class HueControllerTest {
 
         verify(httpAdapter)
                 .sendPutRequest(
-                        eq(new URL("http://192.168.2.2/api/someToken/lights/1/state")),
+                        eq(new URL("http://192.168.2.2/api/someUsername/lights/1/state")),
                         eq("{\"on\":true}"));
 
     }
