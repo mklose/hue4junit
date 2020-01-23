@@ -1,4 +1,4 @@
-[![ci-badge]][ci-actions]
+[![Maven Central](https://img.shields.io/maven-central/v/de.klosebrothers.hue/hue4junit.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22de.klosebrothers.hue%22%20AND%20a:%22hue4junit%22)[![ci-badge]][ci-actions]
 
 
 
