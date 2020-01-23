@@ -1,4 +1,5 @@
-[![Maven Central](https://img.shields.io/maven-central/v/de.klosebrothers.hue/hue4junit.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22de.klosebrothers.hue%22%20AND%20a:%22hue4junit%22)[![ci-badge]][ci-actions]
+[![ci-badge]][ci-actions]
+[![Maven Central](https://img.shields.io/maven-central/v/de.klosebrothers.hue/hue4junit.svg?label=maven)](https://search.maven.org/search?q=g:%22de.klosebrothers.hue%22%20AND%20a:%22hue4junit%22)
 
 This library provides a JUnit5 TestExecutionListener for [Philips hue lights ](https://www2.meethue.com/en-us) to indicate JUnit test run results by turning light bulbs green or red.
 
