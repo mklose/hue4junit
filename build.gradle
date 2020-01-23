@@ -34,7 +34,7 @@ dependencies {
             "org.junit.jupiter:junit-jupiter:${junitJupiterVersion}",
             "org.junit-pioneer:junit-pioneer:0.5.1",
             "org.mockito:mockito-junit-jupiter:3.2.4")
-    testCompile(
+    testImplementation(
             "org.assertj:assertj-core:3.14.0",
             "org.mockito:mockito-core:3.2.4",
             "org.jetbrains:annotations:16.0.2"
