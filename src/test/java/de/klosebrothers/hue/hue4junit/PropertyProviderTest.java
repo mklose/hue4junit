@@ -35,9 +35,9 @@ class PropertyProviderTest {
         assertThat(propertyProvider.getHueBridgeIp())
                 .hasValue("192.168.178.49");
         assertThat(propertyProvider.getHueClient())
-                .hasValue("3O2Ce9zBt9ed7Ht9kdvAlYVbLr7ycmVtTOc6FICU");
+                .hasValue("8GFTbkftIvDT0SWSyV4LliHJICB870JVRr5TkTk1");
         assertThat(propertyProvider.getHueLamps())
-                .hasValue("[\"1\", \"2\", \"3\"]");
+                .hasValue("[1, 2, 3]");
         assertThat(propertyProvider.getHueTimeout())
                 .hasValue("2500");
     }
