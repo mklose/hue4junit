@@ -56,7 +56,7 @@ public class PropertyProvider {
 
     Optional<String> getHueProperty(String filename, String propertyName) {
         //TODO docu
-        // that it's looking for hue4java.properties
+        // that it's looking for hue4junit.properties
         return Optional.ofNullable(getProperty(HueController.class.getClassLoader().getResourceAsStream(filename), propertyName)
                 .orElse(getProperty(Paths.get(filename).toFile(), propertyName)
                         .orElse(System.getProperty(propertyName))));
@@ -64,6 +64,8 @@ public class PropertyProvider {
 
     Optional<String> getProperty(File file, String propertyName) {
         FileInputStream inputStream;
+        if (!file.exists())
+            return Optional.empty();
         try {
             inputStream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
