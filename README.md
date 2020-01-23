@@ -1,12 +1,16 @@
 [![ci-badge]][ci-actions]
 
+
+
+
 This library provides a JUnit5 TestExecutionListener for [Philips hue lights ](https://www2.meethue.com/en-us) to indicate JUnit test run results by turning light bulbs green or red.
 
 # how to
 ## setup hue
 open [setup_hue.html](http://htmlpreview.github.io/?https://github.com/mklose/hue4junit/blob/master/setup_hue.html) and use returned value of __username__ as ``hue.client``.
+
 ``hue.client`` will be retrieved in this order from :
- 1. resource file [__hue4java.properties__](resources/hue4java.properties)
+ 1. resource file [__hue4junit.properties__](resources/hue4junit.properties)
  1. __hue4java.properties__ in project folder
  1. System Property ```hue.client```
  
@@ -20,5 +24,5 @@ open [setup_hue.html](http://htmlpreview.github.io/?https://github.com/mklose/hu
 
 see [here](https://github.com/swkBerlin/kata-bootstraps/tree/master/java/hue4j5) howto add hue4junit to your project
 
-[ci-badge]:https://github.com/mklose/hue4junit/workflows/CI/badge.svg "CI build status"
+[ci-badge]: https://github.com/mklose/hue4junit/workflows/CI/badge.svg "CI build status"
 [ci-actions]: https://github.com/mklose/hue4junit/actions

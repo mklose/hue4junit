@@ -14,7 +14,7 @@ public class PropertyProvider {
     private static final String PROP_NAME_HUE_LAMPS = "hue.listener.lamps";
     private static final String PROP_NAME_HUE_TIMEOUT = "hue.timeout";
     private static Logger logger = Logger.getLogger(PropertyProvider.class.getName());
-    private String propertyFilename = "hue4java.properties";
+    private String propertyFilename = "hue4junit.properties";
     private HttpAdapter httpadapter;
     private String hueBridgeIp = null;
 

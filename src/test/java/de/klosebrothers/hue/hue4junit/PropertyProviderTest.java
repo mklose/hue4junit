@@ -27,7 +27,7 @@ class PropertyProviderTest {
     @Test
     void property_file_is() {
         assertThat(propertyProvider.getPropertyFilename())
-                .isEqualTo("hue4java.properties");
+                .isEqualTo("hue4junit.properties");
     }
 
     @Test
