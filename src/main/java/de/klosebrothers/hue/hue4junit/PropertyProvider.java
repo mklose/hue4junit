@@ -56,7 +56,8 @@ public class PropertyProvider {
     Optional<String> getHueProperty(String filename, String propertyName) {
         //TODO docu
         // that it's looking for hue4junit.properties
-        return Optional.ofNullable(getProperty(HueController.class.getClassLoader().getResourceAsStream(filename), propertyName)
+        return Optional.ofNullable(
+                getProperty(this.getClass().getClassLoader().getResourceAsStream(filename), propertyName)
                 .orElse(getProperty(Paths.get(filename).toFile(), propertyName)
                         .orElse(System.getProperty(propertyName))));
     }
