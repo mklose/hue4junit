@@ -8,9 +8,9 @@ This library provides a JUnit5 TestExecutionListener for [Philips hue lights ](h
 open [setup_hue.html](http://htmlpreview.github.io/?https://github.com/mklose/hue4junit/blob/master/setup_hue.html) and use returned value of __username__ as `hue.username` (you will need to press the button on your hue bridge).
 
 `hue.username` will be retrieved in this order from :
- 1. resource file [hue4junit.properties](src/test/resources/hue4junit.properties)
  1. [hue4junit.properties](hue4junit.properties) in project folder
- 1. System Property `hue.username`
+ 1. resource file [hue4junit.properties](src/test/resources/hue4junit.properties)
+ 1. System Properties
  
  ### optional settings are:
  these settings will be retrieved the same way as `hue.username`. 
