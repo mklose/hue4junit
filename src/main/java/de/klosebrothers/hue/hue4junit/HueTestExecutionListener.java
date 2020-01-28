@@ -87,6 +87,7 @@ public class HueTestExecutionListener implements TestExecutionListener {
         try {
             Thread.sleep(500);
         } catch (InterruptedException ignore) {
+            Thread.currentThread().interrupt();
         }
     }
 
