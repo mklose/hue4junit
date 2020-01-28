@@ -131,7 +131,6 @@ public class HueController {
             disable("connection timeout");
         } catch (IOException ioe) {
             logger.log(Level.WARNING, "IOError, while calling hue", ioe);
-            ioe.printStackTrace();
         }
     }
 
