@@ -46,27 +46,21 @@ public class HueTestExecutionListener implements TestExecutionListener {
     }
 
     private void off() {
-        if (hueController != null) {
-            for (String lamp : hueController.getLampIds()) {
-                hueController.switchOff(lamp);
-            }
-        }
+        if (hueController == null) return;
+        hueController.getLampIds()
+                .forEach(lamp -> hueController.switchOff(lamp));
     }
 
     private void on() {
-        if (hueController != null) {
-            for (String lamp : hueController.getLampIds()) {
-                hueController.switchOn(lamp);
-            }
-        }
+        if (hueController == null) return;
+        hueController.getLampIds()
+                .forEach(lamp -> hueController.switchOn(lamp));
     }
 
     private void changeColourTo(String colour) {
-        if (hueController != null) {
-            for (String lamp : hueController.getLampIds()) {
-                hueController.changeColourTo(lamp, colour);
-            }
-        }
+        if (hueController == null) return;
+        hueController.getLampIds()
+                .forEach(lamp -> hueController.changeColourTo(lamp, colour));
     }
 
     private void green() {
