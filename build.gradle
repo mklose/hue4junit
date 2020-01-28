@@ -10,7 +10,7 @@ repositories {
     mavenCentral()
 }
 
-version = '0.2.1-SNAPSHOT'
+version = '0.2.1'
 
 apply plugin: 'java'
 apply plugin: 'java-library'
