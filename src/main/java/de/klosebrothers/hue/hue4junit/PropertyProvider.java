@@ -58,8 +58,8 @@ public class PropertyProvider {
         // that it's looking for hue4junit.properties
         return Optional.ofNullable(
                 getProperty(this.getClass().getClassLoader().getResourceAsStream(filename), propertyName)
-                .orElse(getProperty(Paths.get(filename).toFile(), propertyName)
-                        .orElse(System.getProperty(propertyName))));
+                        .orElse(getProperty(Paths.get(filename).toFile(), propertyName)
+                                .orElse(System.getProperty(propertyName))));
     }
 
     Optional<String> getProperty(File file, String propertyName) {

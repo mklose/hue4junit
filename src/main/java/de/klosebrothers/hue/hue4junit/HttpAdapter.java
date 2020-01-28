@@ -6,13 +6,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.joining;
 
 public class HttpAdapter {
     private int timeout = 5000;
-
-    HttpAdapter() {
-    }
 
     String sendGetRequest(URL url) throws IOException {
         return sendHttpRequest(url, "GET", null);
@@ -37,7 +35,8 @@ public class HttpAdapter {
 
     private String getResponse(HttpURLConnection httpCon) throws IOException {
         BufferedReader responseReader = new BufferedReader(new InputStreamReader(httpCon.getInputStream()));
-        return responseReader.lines().collect(Collectors.joining(System.getProperty("line.separator")));
+        return responseReader.lines()
+                .collect(joining(System.lineSeparator()));
     }
 
     public void setTimeout(int timeout) {

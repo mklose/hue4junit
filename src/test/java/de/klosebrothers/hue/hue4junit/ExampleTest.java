@@ -23,5 +23,4 @@ class ExampleTest {
         Thread.sleep(3000);
 
     }
-
 }

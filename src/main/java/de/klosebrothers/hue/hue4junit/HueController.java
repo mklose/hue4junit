@@ -5,10 +5,11 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import static java.lang.Integer.parseInt;
+import static java.util.stream.Collectors.toList;
 
 public class HueController {
 
@@ -70,12 +71,13 @@ public class HueController {
         }
 
         return Arrays.stream(
-                propertyProvider.getHueLamps().get()
+                propertyProvider.getHueLamps()
+                        .orElse("")
                         .replace("[", "")
                         .replace("]", "")
                         .split(","))
                 .map(String::trim)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     public boolean isDisabled() {
@@ -128,6 +130,7 @@ public class HueController {
         } catch (SocketTimeoutException ioe) {
             disable("connection timeout");
         } catch (IOException ioe) {
+            logger.log(Level.WARNING, "IOError, while calling hue", ioe);
             ioe.printStackTrace();
         }
     }
