@@ -18,8 +18,8 @@
             var result = JSON.parse(reqLookup.responseText);
             if (result.length === 0){
                 displayResult('Did not find a hue :/');
-                displayResult('Is the hue birdge turned on and in your network?');
-                displayResult('Can you see the birdge on https://www.meethue.com/api/nupnp?');
+                displayResult('Is the hue bridge turned on and in your network?');
+                displayResult('Can you see the bridge on https://www.meethue.com/api/nupnp?');
                 return;
             }
             var hue = result[0];
