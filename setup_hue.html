@@ -16,7 +16,7 @@
         });
         reqLookup.addEventListener('load', function () {
             var result = JSON.parse(reqLookup.responseText);
-            if (result.length === 0){
+            if (result.length === 0) {
                 displayResult('Did not find a hue :/');
                 displayResult('Is the hue bridge turned on and in your network?');
                 displayResult('Can you see the bridge on https://www.meethue.com/api/nupnp?');
@@ -41,10 +41,10 @@
     </script>
 </head>
 <body>
-  <center>
+<center>
     <h2>need to press button on hue bridge</h2>
     <div id='result'></div>
     <button type="submit" onClick="window.location.reload();">reload</button>
-  </center>
+</center>
 </body>
 </html>
