@@ -79,6 +79,7 @@ public class HueTestExecutionListener implements TestExecutionListener {
 
     private void initializeTestRun() {
         executionFailed = false;
+        if (hueController != null) return;
         hueController = new HueController();
     }
 
