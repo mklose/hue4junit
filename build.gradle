@@ -19,15 +19,9 @@ apply plugin: 'signing'
 apply plugin: 'jacoco'
 apply plugin: 'idea'
 
-
-task javadocJar(type: Jar) {
-    classifier = 'javadoc'
-    from javadoc
-}
-
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 jacocoTestReport {
@@ -47,13 +41,10 @@ dependencies {
     testImplementation(
             "org.junit.jupiter:junit-jupiter:${junitJupiterVersion}",
             "org.junit-pioneer:junit-pioneer:0.5.1",
-            "org.mockito:mockito-junit-jupiter:3.2.4")
-    testImplementation(
+            "org.mockito:mockito-junit-jupiter:3.2.4",
             "org.assertj:assertj-core:3.14.0",
-            "org.mockito:mockito-core:3.2.4",
             "org.jetbrains:annotations:16.0.2"
     )
-
 }
 
 compileTestJava {
@@ -73,7 +64,6 @@ test {
             //"hue.timeout" : 2500,
             //"hue.listener.lamps": [1, 2, 3]
     ]
-
 }
 
 publishing {
@@ -108,7 +98,6 @@ publishing {
 
                 description = 'JUnit5 TestExecutionListener for Philips hue lights'
                 url = 'https://github.com/mklose/hue4junit'
-
 
                 licenses {
                     license {
