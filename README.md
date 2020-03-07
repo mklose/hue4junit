@@ -1,3 +1,5 @@
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/mklose/hue4junit) 
+
 [![ci-badge]][ci-actions]
 [![Maven Central](https://img.shields.io/maven-central/v/de.klosebrothers.hue/hue4junit.svg?label=maven)](https://search.maven.org/search?q=g:%22de.klosebrothers.hue%22%20AND%20a:%22hue4junit%22)
 
